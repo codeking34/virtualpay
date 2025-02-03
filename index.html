@@ -905,10 +905,12 @@
                 displayMessage(action + '-message', `${action === 'signup' ? 'User signed up successfully!' : 'Login successful!'}`);
                 if (action === 'login') window.location.href = 'dashboard.html';
             })
-            .catch((error) => {
-                displayMessage(action + '-message', 'An Error Occur');
+                        .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                displayMessage(action + '-message', `Error (${errorCode}): ${errorMessage}`);
             });
-    }
+        }
 
     window.signupUser = function () {
         const username = document.getElementById('signup-username').value;
