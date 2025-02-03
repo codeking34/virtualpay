@@ -908,7 +908,7 @@
                         .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                displayMessage(action + '-message', `Error (${errorCode}): ${errorMessage}`);
+                displayMessage(action + '-message', `Error (${errorCode})`);
             });
         }
 
