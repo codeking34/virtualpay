@@ -123,7 +123,7 @@
               Experience fast, reliable, and secure digital payments with VirtualPay today!.
             </p>
 
-            <a href="#" class="btn btn-primary">Get Started</a>
+            <a href="#" class="btn btn-primary"   onclick="document.getElementById('myModal').style.display='block'" >Get Started</a>
 
           </div>
 
@@ -808,27 +808,32 @@
     <div class="w3-modal-content w3-animate-zoom">
         <div class="w3-modal-header">
             <span onclick="document.getElementById('myModal').style.display='none'" class="w3-button w3-large w3-transparent w3-right">×</span>
-            <img src="./home (2).jpg" alt=""  width="60px" height="60px">
+            <br>
+            <img src="./home (2).jpg" alt="" class="w3-margin "  width="60px" height="60px">
         </div>
         
-        <div id="login" class="form w3-card-4" >
-          <h2>Login</h2>
+        <div id="login" class="form w3-card-4 w3-padding"  style="width: 79%; margin: auto;">
+          <h2 class="w3-text-teal">Login</h2>
           <input type="email" class="w3-input w3-border"  id="login-email" placeholder="Email"><br>
           <input type="password"  class="w3-input w3-border"  id="login-password" placeholder="Password"><br>
-          <button onclick="loginUser()">Login</button>
+          <button onclick="loginUser()" class="w3-btn w3-blue">Login</button>
+          <span class="w3-btn w3-green w3-right" onclick="showSignup()">Register</span>
+          <br>
           <p id="login-message"></p>
       </div>
-      <div id="signup" class="form w3-card-4" style="display: none;">
-          <h2>Signup</h2>
+      <div id="signup" class="form w3-card-4 w3-padding" style="display: none; width: 79%; margin: auto;">
+        <h2 class="w3-text-teal">Register</h2>
           <input type="text" class="w3-input w3-border" id="signup-username" placeholder="Username"><br>
           <input type="email"  class="w3-input w3-border"   id="signup-email" placeholder="Email"><br>
           <input type="password" class="w3-input w3-border"    id="signup-password" placeholder="Password"><br>
-          <button onclick="signupUser()">Signup</button>
+          <button onclick="signupUser()" class="w3-btn w3-blue">Signup</button>
+          <span class="w3-btn w3-green w3-right" onclick="showLogin()">Login</span>
+          <br>
           <p id="signup-message"></p>
       </div>
-      <button onclick="showLogin()" class="w3-tag w3-teal">Login</button>
-      <button onclick="showSignup()" class="w3-tag">Signup</button>
-
+  
+ 
+<br>
     </div>
 </div>
 
@@ -898,10 +903,10 @@
                     });
                 }
                 displayMessage(action + '-message', `${action === 'signup' ? 'User signed up successfully!' : 'Login successful!'}`);
-                if (action === 'login') window.location.href = 'user.html';
+                if (action === 'login') window.location.href = 'dashboard.html';
             })
             .catch((error) => {
-                displayMessage(action + '-message', error.message);
+                displayMessage(action + '-message', 'An Error Occur');
             });
     }
 
