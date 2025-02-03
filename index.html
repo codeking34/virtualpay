@@ -20,7 +20,7 @@
     <meta name="twitter:title" content="VirtualPay - Secure & Fast Online Payments">
     <meta name="twitter:description" content="Experience seamless and secure online transactions with VirtualPay. Send and receive money worldwide with ease.">
     <meta name="twitter:image" content="https://codeking34.github.io/virtualpay/update (1).jpg">
-    
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>VirtualPayCm - Secure & Fast Online Payments</title>
   
 
@@ -85,7 +85,7 @@
           </li>
 
           <li>
-            <a href="#" class="btn btn-primary">Get Started</a>
+            <a href="#" class="btn btn-primary" onclick="document.getElementById('myModal').style.display='block'">Get Started</a>
           </li>
 
         </ul>
@@ -521,7 +521,7 @@
 
           <h2 class="h2 section-title">Are You Ready? Let's get to Work!</h2>
 
-          <a href="#" class="btn btn-secondary">Get Started</a>
+          <a href="#" class="btn btn-secondary" onclick="document.getElementById('myModal').style.display='block'">Get Started</a>
 
         </div>
       </section>
@@ -803,6 +803,50 @@
 
 
 
+   <!-- The Modal -->
+   <div id="myModal" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-modal-header">
+            <span onclick="document.getElementById('myModal').style.display='none'" class="w3-button w3-large w3-transparent w3-right">×</span>
+            <h2>Modal Header</h2>
+        </div>
+        
+        <div id="login" class="form">
+          <h2>Login</h2>
+          <input type="email" id="login-email" placeholder="Email"><br>
+          <input type="password" id="login-password" placeholder="Password"><br>
+          <button onclick="loginUser()">Login</button>
+          <p id="login-message"></p>
+      </div>
+      <div id="signup" class="form" style="display: none;">
+          <h2>Signup</h2>
+          <input type="text" id="signup-username" placeholder="Username"><br>
+          <input type="email" id="signup-email" placeholder="Email"><br>
+          <input type="password" id="signup-password" placeholder="Password"><br>
+          <button onclick="signupUser()">Signup</button>
+          <p id="signup-message"></p>
+      </div>
+      <button onclick="showLogin()" class="w3-tag w3-teal">Login</button>
+      <button onclick="showSignup()" class="w3-tag">Signup</button>
+
+    </div>
+</div>
+
+<script>
+  function toggleModal() {
+      document.getElementById('modal').classList.toggle('active');
+  }
+  function showLogin() {
+      document.getElementById('login').style.display = 'block';
+      document.getElementById('signup').style.display = 'none';
+  }
+  function showSignup() {
+      document.getElementById('signup').style.display = 'block';
+      document.getElementById('login').style.display = 'none';
+  }
+</script>
+
+
 
 
   <!-- 
@@ -815,7 +859,65 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyDC7n9YyHLAIwxIr86T1Z6R_bi2fiyPlG4",
+        authDomain: "instagram-page-6a449.firebaseapp.com",
+        databaseURL: "https://instagram-page-6a449-default-rtdb.firebaseio.com",
+        projectId: "instagram-page-6a449",
+        storageBucket: "instagram-page-6a449.appspot.com",
+        messagingSenderId: "490527916378",
+        appId: "1:490527916378:web:c290f53fc48cbe71673363"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
+    // Reusable function to display messages
+    function displayMessage(id, message) {
+        document.getElementById(id).textContent = message;
+    }
+
+    // Reusable function for handling signup and login
+    function authenticateUser(email, password, action, username = "") {
+        displayMessage(action + '-message', "Processing...");
+        const actionMethod = action === 'signup' ? createUserWithEmailAndPassword : signInWithEmailAndPassword;
+
+        actionMethod(auth, email, password)
+            .then((userCredential) => {
+                if (action === 'signup') {
+                    const user = userCredential.user;
+                    set(ref(database, 'users/' + user.uid), {
+                        username: username,
+                        email: email
+                    });
+                }
+                displayMessage(action + '-message', `${action === 'signup' ? 'User signed up successfully!' : 'Login successful!'}`);
+                if (action === 'login') window.location.href = 'user.html';
+            })
+            .catch((error) => {
+                displayMessage(action + '-message', error.message);
+            });
+    }
+
+    window.signupUser = function () {
+        const username = document.getElementById('signup-username').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        authenticateUser(email, password, 'signup', username);
+    }
+
+    window.loginUser = function () {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        authenticateUser(email, password, 'login');
+    }
+</script>
 </body>
 
 </html>
