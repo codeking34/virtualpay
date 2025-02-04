@@ -2,106 +2,259 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Auth</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
- 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #0a1931;
-            flex-direction: column;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        .modal.active {
-            display: block;
-        }
-        .toggle-buttons button {
-            margin: 5px;
-            padding: 10px;
-            background: #0288d1;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .form input {
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form button {
-            background: #0288d1;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles2.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <title>Users</title>
+
 </head>
-<body>
-    <button onclick="toggleModal()">Open Modal</button>
-    <div id="modal" class="modal">
-        <div class="toggle-buttons">
-            <button onclick="showLogin()">Login</button>
-            <button onclick="showSignup()">Signup</button>
+<body class="body">
+    <section class="header">
+        <div class="logo">
+            <i class="ri-menu-line menu"></i>
+            <h2><span>Virtual</span> PayCm</h2>
         </div>
-        <div id="login" class="form">
-            <h2>Login</h2>
-            <input type="email" id="login-email" placeholder="Email"><br>
-            <input type="password" id="login-password" placeholder="Password"><br>
-            <button onclick="loginUser()">Login</button>
-            <p id="login-message"></p>
+        <div class="header--items">
+            <i class="ri-search-2-line"></i>
+            <div class="dark--theme--btn">
+                <i class="ri-moon-line moon"></i>
+                <i class="ri-sun-line sun"></i>
+            </div>
+            <i class="ri-notification-2-line"></i>
+            <i class="ri-wechat-2-line chat"></i>
+            <div class="profile">
+                <img src="assets/images/profile.jpg" alt="">
+            </div>
         </div>
-        <div id="signup" class="form" style="display: none;">
-            <h2>Signup</h2>
-            <input type="text" id="signup-username" placeholder="Username"><br>
-            <input type="email" id="signup-email" placeholder="Email"><br>
-            <input type="password" id="signup-password" placeholder="Password"><br>
-            <button onclick="signupUser()">Signup</button>
-            <p id="signup-message"></p>
+    </section>
+    <section class="main">
+        <div class="sidebar">
+            <ul class="sidebar--items">
+                <li>
+                    <a href="#" class="active">
+                        <span class="icon"><i class="ri-bar-chart-line"></i></span>
+                        <div class="sidebar--item">Overview</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-handbag-line"></i></span>
+                        <div class="sidebar--item">Product</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-user-line"></i></span>
+                        <div class="sidebar--item">Customers</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-booklet-line"></i></span>
+                        <div class="sidebar--item">Orders</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-shopping-cart-2-line"></i></span>
+                        <div class="sidebar--item">Checkout</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-settings-3-line"></i></span>
+                        <div class="sidebar--item">Settings</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="sidebar--bottom--items">
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-question-line"></i></span>
+                        <div class="sidebar--item">Help</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-logout-box-r-line"></i></span>
+                        <div class="sidebar--item">Logout</div>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>
-    
-    <script>
-        function toggleModal() {
-            document.getElementById('modal').classList.toggle('active');
-        }
-        function showLogin() {
-            document.getElementById('login').style.display = 'block';
-            document.getElementById('signup').style.display = 'none';
-        }
-        function showSignup() {
-            document.getElementById('signup').style.display = 'block';
-            document.getElementById('login').style.display = 'none';
-        }
-    </script>
+        <div class="main--container">
+            <div class="section--title">
+                <h3 class="title">Welcome back, <span id="username"></span></h3>
+                <select name="date" id="date">
+                    <option value="last7">Last 7 days</option>
+                    <option value="lastmonth">Last month</option>
+                    <option value="lastyear">Last year</option>
+                    <option value="alltime">All time</option>
+                </select>
+            </div>
+            <div class="cards">
+                <div class="card card-1">
+                    <div class="card--title">
+                        <span class="card--icon icon"><i class="ri-shopping-bag-2-line"></i></span>
+                        <span>Sales</span>
+                    </div>
+                    <h3 class="card--value">$432,576.34 <i class="ri-arrow-up-circle-fill up"></i></h3>
+                    <h5 class="more">4,234 more than usual</h5>
+                    <div class="chart">
+                        <canvas id="sales"></canvas>
+                    </div>
+                </div>
+                <div class="card card-2">
+                    <div class="card--title">
+                        <span class="card--icon icon"><i class="ri-gift-line"></i></span>
+                        <span>Orders</span>
+                    </div>
+                    <h3 class="card--value">2,567 <i class="ri-arrow-down-circle-fill down"></i></h3>
+                    <h5 class="less">234 less than usual</h5>
+                    <div class="chart">
+                        <canvas id="orders"></canvas>
+                    </div>
+                </div>
+                <div class="card card-3">
+                    <div class="card--title">
+                        <span class="card--icon icon"><i class="ri-handbag-line"></i></span>
+                        <span>Products</span>
+                    </div>
+                    <h3 class="card--value">587 <i class="ri-arrow-up-circle-fill up"></i></h3>
+                    <h5 class="more">23 more than usual</h5>
+                    <div class="chart">
+                        <canvas id="products"></canvas>
+                    </div>
+                </div>
+                <div class="card card-4">
+                    <div class="card--title">
+                        <span class="card--icon icon"><i class="ri-user-line"></i></span>
+                        <span>Customers</span>
+                    </div>
+                    <h3 class="card--value">4,300 <i class="ri-arrow-down-circle-fill down"></i></h3>
+                    <h5 class="less">34 less than usual</h5>
+                    <div class="chart">
+                        <canvas id="customers"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="target-vs-sales--container">
+                <div class="section--title">
+                    <h3 class="title">Sales difference</h3>
+                    <div class="sales--value">
+                        <div class="target">
+                            <i class="ri-checkbox-blank-circle-fill circle"></i>
+                            Target <span>&nbsp; sales</span>
+                        </div>
+                        <div class="current">
+                            <i class="ri-checkbox-blank-circle-fill circle"></i>
+                            Current <span>&nbsp; sales</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="target--vs--sales">
+                    <canvas id="tarsale"></canvas>
+                </div>
+            </div>
+            <div class="table">
+                <div class="section--title">
+                    <h3 class="title">Top products</h3>
+                    <div></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product name</th>
+                            <th>Order ID</th>
+                            <th>Price</th>
+                            <th>Sold</th>
+                            <th>Returned</th>
+                            <th>Sales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air AAPL</td>
+                            <td>#231234</td>
+                            <td>$1846</td>
+                            <td>331</td>
+                            <td>12</td>
+                            <td>$337,218.54</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/sales.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/customers.js"></script>
+    <script src="assets/js/tarsale.js"></script>
 </body>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
     
     const firebaseConfig = {
         apiKey: "AIzaSyDC7n9YyHLAIwxIr86T1Z6R_bi2fiyPlG4",
@@ -112,49 +265,41 @@
         messagingSenderId: "490527916378",
         appId: "1:490527916378:web:c290f53fc48cbe71673363"
     };
-    
+
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    // Reusable function to display messages
-    function displayMessage(id, message) {
-        document.getElementById(id).textContent = message;
+    // Function to fetch and display user data from the database
+    function displayUserData(uid) {
+        const userRef = ref(database, 'users/' + uid);
+        get(userRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                // Display the user data in the HTML
+                document.getElementById('username').textContent = userData.username || 'No Username';
+                document.getElementById('email').textContent = userData.email || 'No Email';
+            } else {
+                document.getElementById('username').textContent = 'No user data found';
+                document.getElementById('email').textContent = 'No user data found';
+            }
+        }).catch((error) => {
+            console.error("Error fetching user data:", error);
+            document.getElementById('username').textContent = 'Error retrieving data';
+            document.getElementById('email').textContent = 'Error retrieving data';
+        });
     }
 
-    // Reusable function for handling signup and login
-    function authenticateUser(email, password, action, username = "") {
-        displayMessage(action + '-message', "Processing...");
-        const actionMethod = action === 'signup' ? createUserWithEmailAndPassword : signInWithEmailAndPassword;
-
-        actionMethod(auth, email, password)
-            .then((userCredential) => {
-                if (action === 'signup') {
-                    const user = userCredential.user;
-                    set(ref(database, 'users/' + user.uid), {
-                        username: username,
-                        email: email
-                    });
-                }
-                displayMessage(action + '-message', `${action === 'signup' ? 'User signed up successfully!' : 'Login successful!'}`);
-                if (action === 'login') window.location.href = 'user.html';
-            })
-            .catch((error) => {
-                displayMessage(action + '-message', error.message);
-            });
-    }
-
-    window.signupUser = function () {
-        const username = document.getElementById('signup-username').value;
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
-        authenticateUser(email, password, 'signup', username);
-    }
-
-    window.loginUser = function () {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        authenticateUser(email, password, 'login');
-    }
+    // Check if user is logged in, fetch and display their data
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, fetch and display their data
+            displayUserData(user.uid);
+        } else {
+            // User is not logged in, redirect to login page
+            window.location.href = 'index.html';
+        }
+    });
 </script>
 </html>
