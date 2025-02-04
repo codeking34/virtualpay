@@ -9,6 +9,92 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+        /* Visa Card Container with Background Image */
+        .card {
+            width: 350px;
+            height: 210px;
+            background: linear-gradient(145deg, #004a99, #0066cc), url('globe.jpg'); /* Gradient + Image */
+            background-size: cover;
+            background-position: right center;
+            border-radius: 15px;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+            background-blend-mode: multiply; /* Blend the image with the background */
+        }
+
+        /* Realistic Chip Design (Moved to Middle-Left) */
+        .chip {
+            position: absolute;
+            left: 20px;
+            top: 35%; /* Align chip vertically in the middle */
+            transform: translateY(-50%); /* Center the chip */
+            width: 60px;
+            height: 45px;
+            background: url("pngwing.com.png");
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           
+        }
+
+        /* Card Number */
+        .card .card-number {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 20px 0;
+        }
+
+        /* Card Expiry Date and Cardholder */
+        .card .bottom {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+
+        .card .expiry-date {
+             font-size: 18px;
+        }
+
+        .card .cardholder-name {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Additional Realistic Effects */
+        .card .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card .visa-logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Text on the top-right corner */
+        .top-right-text {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+    </style>
     <title>Users</title>
 
 </head>
@@ -19,7 +105,7 @@
             <h2><span>Virtual</span> PayCm</h2>
         </div>
         <div class="header--items">
-            <i class="ri-search-2-line"></i>
+          
             <div class="dark--theme--btn">
                 <i class="ri-moon-line moon"></i>
                 <i class="ri-sun-line sun"></i>
@@ -27,7 +113,7 @@
             <i class="ri-notification-2-line"></i>
             <i class="ri-wechat-2-line chat"></i>
             <div class="profile">
-                <img src="assets/images/profile.jpg" alt="">
+              <i class="ri-user-line"></i> 
             </div>
         </div>
     </section>
@@ -100,16 +186,27 @@
                 </select>
             </div>
             <div class="cards">
-                <div class="card card-1">
-                    <div class="card--title">
-                        <span class="card--icon icon"><i class="ri-shopping-bag-2-line"></i></span>
-                        <span>Sales</span>
-                    </div>
-                    <h3 class="card--value">$432,576.34 <i class="ri-arrow-up-circle-fill up"></i></h3>
-                    <h5 class="more">4,234 more than usual</h5>
-                    <div class="chart">
-                        <canvas id="sales"></canvas>
-                    </div>
+                  <div class="card">
+        <!-- Top Section with Visa logo -->
+        <div class="top">
+            <div class="visa-logo">VISA</div>
+        </div>
+
+        <!-- Text on the top-right corner of the card -->
+        <div class="top-right-text">GOLD</div>
+
+        <!-- Centered Card Number -->
+        <div class="card-number">1234 5678 9876 5432</div>
+
+        <!-- Bottom Section with Expiry Date and Cardholder Name -->
+        <div class="bottom">
+            <div class="expiry-date">12/25</div>
+            <div class="cardholder-name"> <span id="username"></span></div>
+        </div>
+
+        <!-- Realistic Chip -->
+        <div class="chip"></div>
+    </div>
                 </div>
                 <div class="card card-2">
                     <div class="card--title">
@@ -145,24 +242,7 @@
                     </div>
                 </div>
             </div>
-            <div class="target-vs-sales--container">
-                <div class="section--title">
-                    <h3 class="title">card Rate 2024 </h3>
-                    <div class="sales--value">
-                        <div class="target">
-                            <i class="ri-checkbox-blank-circle-fill circle"></i>
-                            Premium <span>&nbsp; sales</span>
-                        </div>
-                        <div class="current">
-                            <i class="ri-checkbox-blank-circle-fill circle"></i>
-                            standard <span>&nbsp; sales</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="target--vs--sales">
-                    <canvas id="tarsale"></canvas>
-                </div>
-            </div>
+           
            
             </div>
         </div>
