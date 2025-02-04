@@ -32,6 +32,10 @@
     <section class="main">
         <div class="sidebar">
             <ul class="sidebar--items">
+              <p>User ID: <span id="userid"></span></p>
+<p>Username: <span id="username"></span></p>
+<p>Email: <span id="email"></span></p>
+
                 <li>
                     <a href="#" class="active">
                         <span class="icon"><i class="ri-bar-chart-line"></i></span>
@@ -204,9 +208,7 @@
                 displayUserData(userData, uid);
             } else {
                 console.log("No user data found in database.");
-                document.getElementById('username').textContent = 'No user data found';
-                document.getElementById('email').textContent = 'No user data found';
-                document.getElementById('userid').textContent = uid;
+                displayUserData({ username: "No user data", email: "No user data" }, uid);
             }
         }).catch((error) => {
             console.error("Error fetching user data:", error);
@@ -224,9 +226,6 @@
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
-
-            // Display UID
-            document.getElementById('userid').textContent = uid;
 
             // Check if user data is already in session storage
             const storedData = sessionStorage.getItem("userData");
