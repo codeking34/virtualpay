@@ -864,11 +864,11 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script type="module">
+ <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
-    
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
     const firebaseConfig = {
         apiKey: "AIzaSyDC7n9YyHLAIwxIr86T1Z6R_bi2fiyPlG4",
         authDomain: "instagram-page-6a449.firebaseapp.com",
@@ -878,53 +878,95 @@
         messagingSenderId: "490527916378",
         appId: "1:490527916378:web:c290f53fc48cbe71673363"
     };
-    
+
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    // Reusable function to display messages
+    // Function to display messages
     function displayMessage(id, message) {
         document.getElementById(id).textContent = message;
     }
 
-    // Reusable function for handling signup and login
-    function authenticateUser(email, password, action, username = "") {
-        displayMessage(action + '-message', "Processing...");
-        const actionMethod = action === 'signup' ? createUserWithEmailAndPassword : signInWithEmailAndPassword;
+    // Function to fetch and store user data in session storage
+    function fetchAndStoreUserData(uid, redirect = false) {
+        const userRef = ref(database, 'users/' + uid);
+        
+        get(userRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
 
-        actionMethod(auth, email, password)
-            .then((userCredential) => {
-                if (action === 'signup') {
-                    const user = userCredential.user;
-                    set(ref(database, 'users/' + user.uid), {
-                        username: username,
-                        email: email
-                    });
+                // Store user data in session storage
+                sessionStorage.setItem("userData", JSON.stringify(userData));
+
+                if (redirect) {
+                    window.location.href = 'dashboard.html';
                 }
-                displayMessage(action + '-message', `${action === 'signup' ? 'User signed up successfully!' : 'Login successful!'}`);
-                if (action === 'login') window.location.href = 'dashboard.html';
-            })
-                        .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                displayMessage(action + '-message', `Error (${errorCode})`);
-            });
-        }
+            } else {
+                displayMessage('login-message', "User data not found.");
+            }
+        }).catch((error) => {
+            console.error("Error fetching user data:", error);
+            displayMessage('login-message', "Error retrieving user data.");
+        });
+    }
 
+    // Signup function
     window.signupUser = function () {
         const username = document.getElementById('signup-username').value;
         const email = document.getElementById('signup-email').value;
         const password = document.getElementById('signup-password').value;
-        authenticateUser(email, password, 'signup', username);
-    }
 
+        displayMessage('signup-message', "Signing up...");
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+
+                // Save user data to Firebase Database
+                set(ref(database, 'users/' + user.uid), {
+                    username: username,
+                    email: email
+                }).then(() => {
+                    displayMessage('signup-message', "Signup successful! Redirecting...");
+                    sessionStorage.setItem("userData", JSON.stringify({ username, email }));
+                    window.location.href = 'dashboard.html';
+                });
+            })
+            .catch((error) => {
+                displayMessage('signup-message', `Error: ${error.message}`);
+            });
+    };
+
+    // Login function
     window.loginUser = function () {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
-        authenticateUser(email, password, 'login');
-    }
+
+        displayMessage('login-message', "Processing...");
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                const uid = user.uid;
+
+                // Check session storage first
+                const storedData = sessionStorage.getItem("userData");
+                if (storedData) {
+                    console.log("Using cached user data.");
+                    window.location.href = 'dashboard.html';
+                } else {
+                    console.log("Fetching user data from Firebase.");
+                    fetchAndStoreUserData(uid, true);
+                }
+            })
+            .catch((error) => {
+                displayMessage('login-message', `Error: ${error.message}`);
+            });
+    };
 </script>
+
 </body>
 
 </html>
