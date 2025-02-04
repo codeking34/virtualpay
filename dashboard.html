@@ -173,7 +173,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
     import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
-    
+
     const firebaseConfig = {
         apiKey: "AIzaSyDC7n9YyHLAIwxIr86T1Z6R_bi2fiyPlG4",
         authDomain: "instagram-page-6a449.firebaseapp.com",
@@ -189,35 +189,59 @@
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    // Function to fetch and display user data from the database
-    function displayUserData(uid) {
+    // Function to fetch and store user data in session storage
+    function fetchAndStoreUserData(uid) {
         const userRef = ref(database, 'users/' + uid);
+        
         get(userRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const userData = snapshot.val();
-                // Display the user data in the HTML
-                document.getElementById('username').textContent = userData.username || 'No Username';
-                document.getElementById('email').textContent = userData.email || 'No Email';
+                
+                // Store user data in session storage
+                sessionStorage.setItem("userData", JSON.stringify(userData));
+                
+                // Display the data
+                displayUserData(userData, uid);
             } else {
+                console.log("No user data found in database.");
                 document.getElementById('username').textContent = 'No user data found';
                 document.getElementById('email').textContent = 'No user data found';
+                document.getElementById('userid').textContent = uid;
             }
         }).catch((error) => {
             console.error("Error fetching user data:", error);
-            document.getElementById('username').textContent = 'Error retrieving data';
-            document.getElementById('email').textContent = 'Error retrieving data';
         });
     }
 
-    // Check if user is logged in, fetch and display their data
+    // Function to display user data
+    function displayUserData(userData, uid) {
+        document.getElementById('userid').textContent = uid;
+        document.getElementById('username').textContent = userData.username || 'No Username';
+        document.getElementById('email').textContent = userData.email || 'No Email';
+    }
+
+    // Check if user is logged in and retrieve data from session storage
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // User is signed in, fetch and display their data
-            displayUserData(user.uid);
+            const uid = user.uid;
+
+            // Display UID
+            document.getElementById('userid').textContent = uid;
+
+            // Check if user data is already in session storage
+            const storedData = sessionStorage.getItem("userData");
+            if (storedData) {
+                console.log("Using cached user data.");
+                displayUserData(JSON.parse(storedData), uid);
+            } else {
+                console.log("Fetching user data from Firebase.");
+                fetchAndStoreUserData(uid);
+            }
         } else {
-            // User is not logged in, redirect to login page
+            // Redirect to login page if user is not logged in
             window.location.href = 'index.html';
         }
     });
 </script>
+
 </html>
