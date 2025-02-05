@@ -175,7 +175,7 @@ body {
             display: none;
         }
         .imgS {
-            width: 100%;
+            width: 300px;
             border-radius: 8px;
         }
         .prev, .next {
