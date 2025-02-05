@@ -134,50 +134,9 @@
       </section>
 
 
+<img src="./card1.png" alt="" width="100%" height="auto">
+   
 
-     <div class="w3-content w3-display-container slideshow-container">
-        <div class="mySlides w3-animate-fading">
-            <img src="./card1.png"  class="imgS">
-        </div>
-        <div class="mySlides w3-animate-fading">
-            <img src="./boyc.png"  class="imgS">
-        </div>
-        <div class="mySlides w3-animate-fading">
-            <img src="./t1.avif" class="imgS">
-        </div>
-        <a class="w3-button w3-display-left" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="w3-button w3-display-right" onclick="plusSlides(1)">&#10095;</a>
-    </div>
-    <div class="dots-container">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-    </div>
-    <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-        function showSlides(n) {
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}    
-            if (n < 1) {slideIndex = slides.length}
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
-        }
-    </script>
       <!-- 
         - #SERVICE
       -->
@@ -844,36 +803,45 @@
   </a>
 
 
-
-   <!-- The Modal -->
-   <div id="myModal" class="w3-modal" style="margin-top:100px; background-image:url('card1.ng');background-size:cover;background-repeat:no-repeat;">
-    <div class="w3-modal-content w3-animate-zoom">
-        <div class="w3-modal-header">
-            <span onclick="document.getElementById('myModal').style.display='none'" class="w3-button w3-large w3-transparent w3-right">×</span>
-            <br>
-            <img src="logoG.png" alt="" class="w3-margin "  width="180px" height="180px">
+<!-- The Modal -->
+<div id="myModal" class="w3-modal" style="display: none;">
+    <div class="w3-modal-content w3-animate-zoom w3-round-large w3-padding" style="max-width: 400px; margin: 100px auto; background: url('card1.png') no-repeat center center/cover;">
+        <div class="w3-center">
+            <span onclick="document.getElementById('myModal').style.display='none'" class="w3-button w3-large w3-transparent w3-display-topright" aria-label="Close">&times;</span>
+            <img src="logoG.png" alt="Logo" class="w3-margin w3-circle" width="120px" height="120px">
         </div>
         
-        <div id="login" class="form w3-card-4 w3-padding"  style="width: 79%; margin: auto;">
-          <h2 class="w3-text-teal">Login</h2>
-          <input type="email" class="w3-input w3-border"  id="login-email" placeholder="Email"><br>
-          <input type="password"  class="w3-input w3-border"  id="login-password" placeholder="Password"><br>
-          <button onclick="loginUser()" class="w3-btn w3-blue">Login</button>
-          <span class="w3-btn w3-green w3-right" onclick="showSignup()">Register</span>
-          <br>
-          <p id="login-message"></p>
-      </div>
-      <div id="signup" class="form w3-card-4 w3-padding" style="display: none; width: 79%; margin: auto;">
-        <h2 class="w3-text-teal">Register</h2>
-          <input type="text" class="w3-input w3-border" id="signup-username" placeholder="Username"><br>
-          <input type="email"  class="w3-input w3-border"   id="signup-email" placeholder="Email"><br>
-          <input type="password" class="w3-input w3-border"    id="signup-password" placeholder="Password"><br>
-          <button onclick="signupUser()" class="w3-btn w3-blue">Signup</button>
-          <span class="w3-btn w3-green w3-right" onclick="showLogin()">Login</span>
-          <br>
-          <p id="signup-message"></p>
-      </div>
-  
+        <div id="login" class="w3-padding w3-white w3-round">
+            <h2 class="w3-text-teal w3-center">Login</h2>
+            <input type="email" class="w3-input w3-border w3-round" id="login-email" placeholder="Email" required>
+            <br>
+            <input type="password" class="w3-input w3-border w3-round" id="login-password" placeholder="Password" required>
+            <br>
+            <button onclick="loginUser()" class="w3-button w3-blue w3-round w3-block">Login</button>
+            <p class="w3-center">
+                <span class="w3-button w3-green w3-round" onclick="showSignup()">Register</span>
+            </p>
+            <p id="login-message" class="w3-text-red w3-center"></p>
+        </div>
+
+        <div id="signup" class="w3-padding w3-white w3-round" style="display: none;">
+            <h2 class="w3-text-teal w3-center">Register</h2>
+            <input type="text" class="w3-input w3-border w3-round" id="signup-username" placeholder="Username" required>
+            <br>
+            <input type="email" class="w3-input w3-border w3-round" id="signup-email" placeholder="Email" required>
+            <br>
+            <input type="password" class="w3-input w3-border w3-round" id="signup-password" placeholder="Password" required>
+            <br>
+            <button onclick="signupUser()" class="w3-button w3-blue w3-round w3-block">Signup</button>
+            <p class="w3-center">
+                <span class="w3-button w3-green w3-round" onclick="showLogin()">Login</span>
+            </p>
+            <p id="signup-message" class="w3-text-red w3-center"></p>
+        </div>
+    </div>
+</div>
+
+   
  
 <br>
     </div>
