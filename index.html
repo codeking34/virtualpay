@@ -114,8 +114,8 @@
 
           <div class="hero-content">
 
-            <p class="hero-subtitle"> <img src="vcard2.png" width="40px" height="40px">  VirtualPayCm Service Agency</p>
-
+            <p class="hero-subtitle"> VirtualPayCm Service Agency</p>
+       <img src="vcard2.png" width="40px" height="40px"> 
             <h1 class="h1 hero-title">We are available for Service</h1>
 
             <p class="hero-text">
@@ -133,26 +133,51 @@
         </div>
       </section>
 
-     <section class="section hero" id="home" aria-label="hero">
-        <div class="container">
-       <figure class="hero-banner">
-                <img src="./boyc.png" width="100%" height="773" alt="hero banner" class="w-100">
-              </figure>
-          <div class="hero-content">
-            <p class="hero-text">
-              Trusted By Many.
-            </p>
 
-           <img src="card2.png" width="100%" height="560px"> 
-          </div>
 
-       
-
+     <div class="w3-content w3-display-container slideshow-container">
+        <div class="mySlides w3-animate-fading">
+            <img src="./card1.png"  class="imgS">
         </div>
-      </section>
+        <div class="mySlides w3-animate-fading">
+            <img src="./boyc.png"  class="imgS">
+        </div>
+        <div class="mySlides w3-animate-fading">
+            <img src="./t1.avif" class="imgS">
+        </div>
+        <a class="w3-button w3-display-left" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="w3-button w3-display-right" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <div class="dots-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
 
-
-   
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
       <!-- 
         - #SERVICE
       -->
