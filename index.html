@@ -113,9 +113,9 @@
         <div class="container">
 
           <div class="hero-content">
-
+            <img src="vcard2.png" width="100px"  class="w3-center" height="100px"> 
             <p class="hero-subtitle"> VirtualPayCm Service Agency</p>
-       <img src="vcard2.png" width="40px" height="40px"> 
+      
             <h1 class="h1 hero-title">We are available for Service</h1>
 
             <p class="hero-text">
@@ -808,16 +808,17 @@
     <div class="w3-modal-content w3-animate-zoom w3-round-large w3-padding" style="max-width: 400px; margin: 100px auto; background: url('card1.png') no-repeat center center/cover;">
         <div class="w3-center">
             <span onclick="document.getElementById('myModal').style.display='none'" class="w3-button w3-large w3-transparent w3-display-topright" aria-label="Close">&times;</span>
-            <img src="logoG.png" alt="Logo" class="w3-margin w3-circle" width="120px" height="120px">
+            
         </div>
         
         <div id="login" class="w3-padding w3-white w3-round">
-            <h2 class="w3-text-teal w3-center">Login</h2>
+            <img src="logoG.png" alt="Logo" class="w3-right " width="80px" height="80px">
+            <h3 class="w3-text-teal w3-left">Login</h2>
             <input type="email" class="w3-input w3-border w3-round" id="login-email" placeholder="Email" required>
             <br>
             <input type="password" class="w3-input w3-border w3-round" id="login-password" placeholder="Password" required>
             <br>
-            <button onclick="loginUser()" class="w3-button w3-blue w3-round w3-block">Login</button>
+            <button onclick="loginUser()" class="w3-button w3-blue w3-round w3-block w3-left">Login</button>
             <p class="w3-center">
                 <span class="w3-button w3-green w3-round" onclick="showSignup()">Register</span>
             </p>
@@ -825,7 +826,8 @@
         </div>
 
         <div id="signup" class="w3-padding w3-white w3-round" style="display: none;">
-            <h2 class="w3-text-teal w3-center">Register</h2>
+            <img src="logoG.png" alt="Logo" class="w3-left" width="80px" height="80px">
+            <h3 class="w3-text-teal w3-right">Register</h2>
             <input type="text" class="w3-input w3-border w3-round" id="signup-username" placeholder="Username" required>
             <br>
             <input type="email" class="w3-input w3-border w3-round" id="signup-email" placeholder="Email" required>
@@ -834,7 +836,7 @@
             <br>
             <button onclick="signupUser()" class="w3-button w3-blue w3-round w3-block">Signup</button>
             <p class="w3-center">
-                <span class="w3-button w3-green w3-round" onclick="showLogin()">Login</span>
+                <span class="w3-button w3-green w3-round w3-right" onclick="showLogin()" >Login</span>
             </p>
             <p id="signup-message" class="w3-text-red w3-center"></p>
         </div>
